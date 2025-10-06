@@ -11,7 +11,6 @@ import PasswordGenerator from './PasswordGenerator';
 import UserSettings from './UserSettings';
 import { 
   Plus, 
-  Search, 
   Copy, 
   Edit, 
   Trash2, 
@@ -170,44 +169,54 @@ export default function VaultDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      {/* Modern Header */}
+      <header className="glass border-b border-white/20 dark:border-gray-700/50 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-20">
             <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <Key className="h-8 w-8 text-blue-600" />
-                <h1 className="text-xl font-bold text-gray-900 dark:text-white">SecureVault</h1>
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl shadow-lg">
+                  <Key className="h-7 w-7 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-2xl font-bold gradient-text">SecureVault</h1>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Your digital fortress</p>
+                </div>
               </div>
             </div>
 
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
               <button
                 onClick={toggleDarkMode}
-                className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                className="modern-icon-button"
+                title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
               >
                 {darkMode ? <Sun size={20} /> : <Moon size={20} />}
               </button>
               
               <button
                 onClick={() => setShowUserSettings(true)}
-                className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                className="modern-icon-button"
+                title="User settings"
               >
                 <Settings size={20} />
               </button>
               
-              <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
-                <User size={16} />
-                <span>{user?.name}</span>
+              <div className="hidden sm:flex items-center space-x-2 px-3 py-2 glass rounded-xl">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                  <User size={14} className="text-white" />
+                </div>
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{user?.name}</span>
               </div>
               
               <button
                 onClick={logout}
-                className="flex items-center space-x-1 px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                className="flex items-center space-x-2 px-4 py-2 glass hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all duration-200 group"
+                title="Sign out"
               >
-                <LogOut size={16} />
-                <span>Logout</span>
+                <LogOut size={16} className="text-gray-600 dark:text-gray-400 group-hover:text-red-500" />
+                <span className="hidden sm:inline text-sm text-gray-600 dark:text-gray-400 group-hover:text-red-500">Logout</span>
               </button>
             </div>
           </div>
@@ -216,90 +225,141 @@ export default function VaultDashboard() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Password Generator */}
-          <div className="lg:col-span-1">
-            <div className="mb-6">
+          {/* Password Generator Sidebar */}
+          <div className="lg:col-span-1 space-y-6">
+            <div className="modern-card">
               <button
                 onClick={() => setShowPasswordGenerator(!showPasswordGenerator)}
-                className="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm border dark:border-gray-700 hover:shadow-md transition-shadow"
+                className="w-full flex items-center justify-between p-6 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 rounded-2xl transition-all duration-200"
               >
-                <span className="font-medium text-gray-900 dark:text-white">Password Generator</span>
-                <Plus className={`h-5 w-5 transform transition-transform ${showPasswordGenerator ? 'rotate-45' : ''}`} />
+                <div className="flex items-center space-x-3">
+                  <div className="p-2 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl">
+                    <Key className="h-5 w-5 text-white" />
+                  </div>
+                  <span className="font-semibold text-gray-900 dark:text-white">Password Generator</span>
+                </div>
+                <Plus className={`h-5 w-5 text-gray-500 dark:text-gray-400 transform transition-transform duration-200 ${showPasswordGenerator ? 'rotate-45' : ''}`} />
               </button>
+              
+              {showPasswordGenerator && (
+                <div className="px-6 pb-6">
+                  <div className="h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-700 to-transparent mb-6"></div>
+                  <PasswordGenerator />
+                </div>
+              )}
             </div>
             
-            {showPasswordGenerator && (
-              <PasswordGenerator className="mb-6" />
-            )}
+            {/* Stats Card */}
+            <div className="modern-card p-6">
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Vault Statistics</h3>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Total Items</span>
+                  <span className="font-medium text-gray-900 dark:text-white">{vaultItems.length}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Filtered Items</span>
+                  <span className="font-medium text-gray-900 dark:text-white">{filteredItems.length}</span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Vault Items */}
+          {/* Main Vault Items */}
           <div className="lg:col-span-2">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border dark:border-gray-700">
-              <div className="p-6 border-b dark:border-gray-700">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                    Your Vault ({filteredItems.length})
-                  </h2>
+            <div className="modern-card">
+              <div className="p-6 border-b border-gray-200/50 dark:border-gray-700/50">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div>
+                    <h2 className="text-2xl font-bold gradient-text">
+                      Your Vault
+                    </h2>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                      {filteredItems.length} {filteredItems.length === 1 ? 'item' : 'items'} found
+                    </p>
+                  </div>
                   <button
                     onClick={() => {
                       setSelectedItem(undefined);
                       setIsFormOpen(true);
                     }}
-                    className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors"
+                    className="modern-button bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 flex items-center space-x-2"
                   >
-                    <Plus size={16} />
+                    <Plus className="h-4 w-4" />
                     <span>Add Item</span>
                   </button>
                 </div>
 
-                {/* Search */}
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <input
-                    type="text"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                    placeholder="Search vault items..."
-                  />
+                {/* Modern Search Bar */}
+                <div className="mt-6">
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="Search your vault..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="modern-input pl-12 bg-gray-50/50 dark:bg-gray-800/50"
+                    />
+                  </div>
                 </div>
               </div>
 
-              {/* Items List */}
-              <div className="divide-y dark:divide-gray-700">
+              {/* Modern Items List */}
+              <div className="divide-y divide-gray-200/50 dark:divide-gray-700/50">
                 {filteredItems.length === 0 ? (
-                  <div className="p-8 text-center text-gray-500 dark:text-gray-400">
-                    {searchTerm ? 'No items match your search.' : 'No vault items yet. Add your first item!'}
+                  <div className="p-12 text-center">
+                    <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-2xl flex items-center justify-center">
+                      <Key className="w-10 h-10 text-gray-400" />
+                    </div>
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                      {searchTerm ? 'No items found' : 'Your vault is empty'}
+                    </h3>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      {searchTerm ? 'Try adjusting your search term.' : 'Add your first secure item to get started!'}
+                    </p>
                   </div>
                 ) : (
                   filteredItems.map((item) => (
-                    <div key={item._id} className="p-6 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                    <div key={item._id} className="p-6 hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-all duration-200 group">
                       <div className="flex items-start justify-between">
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <h3 className="text-lg font-medium text-gray-900 dark:text-white truncate">
-                              {item.title}
-                            </h3>
-                            {item.url && (
-                              <a
-                                href={item.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
-                              >
-                                <ExternalLink size={16} />
-                              </a>
-                            )}
+                          <div className="flex items-center space-x-3 mb-3">
+                            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                              <Key className="w-6 h-6 text-white" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center space-x-2">
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white truncate">
+                                  {item.title}
+                                </h3>
+                                {item.url && (
+                                  <a
+                                    href={item.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                                    title="Open website"
+                                  >
+                                    <ExternalLink size={18} />
+                                  </a>
+                                )}
+                              </div>
+                              {item.notes && (
+                                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 truncate">
+                                  {item.notes}
+                                </p>
+                              )}
+                            </div>
                           </div>
                           
                           {item.username && (
-                            <div className="flex items-center space-x-2 mb-2">
-                              <span className="text-sm text-gray-600 dark:text-gray-400">Username:</span>
-                              <span className="text-sm text-gray-900 dark:text-white">{item.username}</span>
+                            <div className="flex items-center space-x-3 mb-2 ml-15">
+                              <span className="text-sm text-gray-500 dark:text-gray-400 w-20">Username:</span>
+                              <span className="text-sm text-gray-900 dark:text-white font-medium">{item.username}</span>
                               <button
                                 onClick={() => copyToClipboard(item.username!, 'Username')}
-                                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                                className="modern-icon-button-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                                title="Copy username"
                               >
                                 <Copy size={14} />
                               </button>
@@ -307,32 +367,36 @@ export default function VaultDashboard() {
                           )}
                           
                           {item.password && (
-                            <div className="flex items-center space-x-2 mb-2">
-                              <span className="text-sm text-gray-600 dark:text-gray-400">Password:</span>
+                            <div className="flex items-center space-x-3 mb-3 ml-15">
+                              <span className="text-sm text-gray-500 dark:text-gray-400 w-20">Password:</span>
                               <span className="text-sm font-mono text-gray-900 dark:text-white">
-                                {visiblePasswords.has(item._id!) ? item.password : '••••••••'}
+                                {visiblePasswords.has(item._id!) ? item.password : '••••••••••••'}
                               </span>
-                              <button
-                                onClick={() => togglePasswordVisibility(item._id!)}
-                                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
-                              >
-                                {visiblePasswords.has(item._id!) ? <EyeOff size={14} /> : <Eye size={14} />}
-                              </button>
-                              <button
-                                onClick={() => copyToClipboard(item.password!, 'Password')}
-                                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
-                              >
-                                <Copy size={14} />
-                              </button>
+                              <div className="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <button
+                                  onClick={() => togglePasswordVisibility(item._id!)}
+                                  className="modern-icon-button-sm"
+                                  title={visiblePasswords.has(item._id!) ? 'Hide password' : 'Show password'}
+                                >
+                                  {visiblePasswords.has(item._id!) ? <EyeOff size={14} /> : <Eye size={14} />}
+                                </button>
+                                <button
+                                  onClick={() => copyToClipboard(item.password!, 'Password')}
+                                  className="modern-icon-button-sm"
+                                  title="Copy password"
+                                >
+                                  <Copy size={14} />
+                                </button>
+                              </div>
                             </div>
                           )}
                           
                           {item.tags && item.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-1 mt-2">
+                            <div className="flex flex-wrap gap-2 mt-3 ml-15">
                               {item.tags.map((tag, index) => (
                                 <span
                                   key={index}
-                                  className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+                                  className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 dark:from-blue-900/30 dark:to-purple-900/30 dark:text-blue-200"
                                 >
                                   {tag}
                                 </span>
@@ -341,19 +405,21 @@ export default function VaultDashboard() {
                           )}
                         </div>
 
-                        <div className="flex items-center space-x-2 ml-4">
+                        <div className="flex items-center space-x-2 ml-4 opacity-0 group-hover:opacity-100 transition-opacity">
                           <button
                             onClick={() => {
                               setSelectedItem(item);
                               setIsFormOpen(true);
                             }}
-                            className="p-2 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
+                            className="modern-icon-button hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400"
+                            title="Edit item"
                           >
                             <Edit size={16} />
                           </button>
                           <button
                             onClick={() => handleDeleteItem(item._id!)}
-                            className="p-2 text-gray-400 hover:text-red-600 dark:hover:text-red-400"
+                            className="modern-icon-button hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400"
+                            title="Delete item"
                           >
                             <Trash2 size={16} />
                           </button>

@@ -30,7 +30,14 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-          
+              (function() {
+                try {
+                  const darkMode = localStorage.getItem('darkMode') === 'true';
+                  if (darkMode) {
+                    document.documentElement.classList.add('dark');
+                  }
+                } catch (e) {}
+              })();
             `,
           }}
         />

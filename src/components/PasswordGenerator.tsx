@@ -68,60 +68,67 @@ export default function PasswordGenerator({ onPasswordGenerated, className = '' 
   };
 
   return (
-    <div className={`bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 ${className}`}>
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Password Generator</h2>
+    <div className={`modern-card p-6 ${className}`}>
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center space-x-3">
+          <div className="p-2 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl">
+            <RefreshCw className="h-5 w-5 text-white" />
+          </div>
+          <h2 className="text-xl font-bold gradient-text">Password Generator</h2>
+        </div>
         <button
           onClick={() => setShowAdvanced(!showAdvanced)}
-          className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+          className="modern-icon-button"
+          title={showAdvanced ? "Hide advanced options" : "Show advanced options"}
         >
           <Settings size={20} />
         </button>
       </div>
 
-      {/* Generated Password */}
-      <div className="mb-4">
-        <div className="flex items-center space-x-2 mb-2">
+      {/* Generated Password Display */}
+      <div className="mb-6">
+        <div className="flex items-center space-x-3 mb-4">
           <input
             type="text"
             value={password}
             readOnly
-            className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md font-mono text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white"
+            className="modern-input flex-1 font-mono text-sm bg-gray-50/50 dark:bg-gray-800/50 text-center"
+            placeholder="Click generate to create a password..."
           />
           <button
             onClick={handleCopyPassword}
             disabled={!password}
-            className="p-2 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 text-white rounded-md transition-colors"
+            className="modern-button bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2"
             title="Copy password"
           >
-            <Copy size={18} />
+            <Copy size={16} />
           </button>
           <button
             onClick={handleGeneratePassword}
-            className="p-2 bg-green-500 hover:bg-green-600 text-white rounded-md transition-colors"
+            className="modern-button bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 px-4 py-2"
             title="Generate new password"
           >
-            <RefreshCw size={18} />
+            <RefreshCw size={16} />
           </button>
         </div>
 
-        {/* Password Strength */}
+        {/* Modern Password Strength Indicator */}
         {password && (
-          <div className="space-y-2">
+          <div className="space-y-3">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-600 dark:text-gray-400">Strength:</span>
-              <span className={`font-semibold ${
-                strength.score >= 80 ? 'text-green-600' :
-                strength.score >= 60 ? 'text-yellow-600' :
-                strength.score >= 40 ? 'text-orange-600' :
-                'text-red-600'
+              <span className="text-gray-600 dark:text-gray-400 font-medium">Security Strength:</span>
+              <span className={`font-bold text-sm px-3 py-1 rounded-full ${
+                strength.score >= 80 ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300' :
+                strength.score >= 60 ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300' :
+                strength.score >= 40 ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300' :
+                'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'
               }`}>
                 {getStrengthText(strength.score)}
               </span>
             </div>
-            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+            <div className="w-full bg-gray-200/50 dark:bg-gray-700/50 rounded-full h-3 overflow-hidden">
               <div
-                className={`h-2 rounded-full transition-all duration-300 ${getStrengthColor(strength.score)}`}
+                className={`h-3 rounded-full transition-all duration-500 ${getStrengthColor(strength.score)}`}
                 style={{ width: `${strength.score}%` }}
               />
             </div>
@@ -129,97 +136,130 @@ export default function PasswordGenerator({ onPasswordGenerated, className = '' 
         )}
       </div>
 
-      {/* Basic Options */}
-      <div className="space-y-4">
+      {/* Modern Length Slider */}
+      <div className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Length: {options.length}
-          </label>
+          <div className="flex items-center justify-between mb-3">
+            <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+              Password Length
+            </label>
+            <span className="text-sm font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded-full">
+              {options.length} characters
+            </span>
+          </div>
           <input
             type="range"
             min="8"
             max="128"
             value={options.length}
             onChange={(e) => updateOption('length', parseInt(e.target.value))}
-            className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer"
+            className="w-full h-3 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600 rounded-full appearance-none cursor-pointer slider"
           />
-          <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
-            <span>8</span>
-            <span>128</span>
+          <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-2">
+            <span className="font-medium">Weak (8)</span>
+            <span className="font-medium">Strong (128)</span>
           </div>
         </div>
 
         {showAdvanced && (
-          <div className="space-y-3 border-t dark:border-gray-700 pt-4">
-            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Character Types</h3>
+          <div className="space-y-4 pt-6 border-t border-gray-200/50 dark:border-gray-700/50">
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="p-1.5 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg">
+                <Settings className="h-4 w-4 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300">Advanced Options</h3>
+            </div>
             
-            <div className="grid grid-cols-2 gap-3">
-              <label className="flex items-center space-x-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <label className="modern-checkbox-label">
                 <input
                   type="checkbox"
                   checked={options.includeUppercase}
                   onChange={(e) => updateOption('includeUppercase', e.target.checked)}
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  className="modern-checkbox"
                 />
-                <span className="text-sm text-gray-700 dark:text-gray-300">Uppercase (A-Z)</span>
+                <span className="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Uppercase Letters
+                  <span className="block text-xs text-gray-500 dark:text-gray-400">A, B, C...</span>
+                </span>
               </label>
 
-              <label className="flex items-center space-x-2">
+              <label className="modern-checkbox-label">
                 <input
                   type="checkbox"
                   checked={options.includeLowercase}
                   onChange={(e) => updateOption('includeLowercase', e.target.checked)}
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  className="modern-checkbox"
                 />
-                <span className="text-sm text-gray-700 dark:text-gray-300">Lowercase (a-z)</span>
+                <span className="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Lowercase Letters
+                  <span className="block text-xs text-gray-500 dark:text-gray-400">a, b, c...</span>
+                </span>
               </label>
 
-              <label className="flex items-center space-x-2">
+              <label className="modern-checkbox-label">
                 <input
                   type="checkbox"
                   checked={options.includeNumbers}
                   onChange={(e) => updateOption('includeNumbers', e.target.checked)}
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  className="modern-checkbox"
                 />
-                <span className="text-sm text-gray-700 dark:text-gray-300">Numbers (0-9)</span>
+                <span className="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Numbers
+                  <span className="block text-xs text-gray-500 dark:text-gray-400">0, 1, 2...</span>
+                </span>
               </label>
 
-              <label className="flex items-center space-x-2">
+              <label className="modern-checkbox-label">
                 <input
                   type="checkbox"
                   checked={options.includeSymbols}
                   onChange={(e) => updateOption('includeSymbols', e.target.checked)}
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  className="modern-checkbox"
                 />
-                <span className="text-sm text-gray-700 dark:text-gray-300">Symbols (!@#$...)</span>
+                <span className="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Symbols
+                  <span className="block text-xs text-gray-500 dark:text-gray-400">!, @, #...</span>
+                </span>
               </label>
             </div>
 
-            <label className="flex items-center space-x-2">
+            <label className="modern-checkbox-label">
               <input
                 type="checkbox"
                 checked={options.excludeSimilar}
                 onChange={(e) => updateOption('excludeSimilar', e.target.checked)}
-                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                className="modern-checkbox"
               />
-              <span className="text-sm text-gray-700 dark:text-gray-300">
-                Exclude similar characters (i, l, 1, L, o, 0, O)
+              <span className="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300">
+                Exclude Similar Characters
+                <span className="block text-xs text-gray-500 dark:text-gray-400">
+                  Avoid confusing characters like i, l, 1, L, o, 0, O
+                </span>
               </span>
             </label>
           </div>
         )}
 
-        {/* Strength Feedback */}
+        {/* Modern Strength Feedback */}
         {password && strength.feedback.length > 0 && (
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-md p-3">
-            <h4 className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-1">
-              Suggestions:
-            </h4>
-            <ul className="text-xs text-blue-700 dark:text-blue-300 space-y-1">
-              {strength.feedback.map((tip, index) => (
-                <li key={index}>• {tip}</li>
-              ))}
-            </ul>
+          <div className="modern-alert bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-200">
+            <div className="flex items-start space-x-3">
+              <div className="p-2 bg-blue-500 rounded-lg flex-shrink-0">
+                <Settings className="w-4 h-4 text-white" />
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2">Security Recommendations:</h4>
+                <ul className="text-sm space-y-1">
+                  {strength.feedback.map((tip, index) => (
+                    <li key={index} className="flex items-start space-x-2">
+                      <span className="text-blue-500 mt-1">•</span>
+                      <span>{tip}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         )}
       </div>
