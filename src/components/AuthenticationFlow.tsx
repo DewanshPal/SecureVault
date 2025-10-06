@@ -6,26 +6,33 @@ import AuthForm from '@/components/AuthForm';
 import TwoFactorVerification from '@/components/TwoFactorVerification';
 import VaultDashboard from '@/components/VaultDashboard';
 
-export default function Home() {
+export default function AuthenticationFlow() {
   const { user, login, isLoading } = useAuth();
-  const [isLoginMode, setIsLoginMode] = useState(true);
-  const [showTwoFactor, setShowTwoFactor] = useState(false);
+  const [authState, setAuthState] = useState<'login' | 'register' | '2fa'>('login');
   const [pendingAuth, setPendingAuth] = useState<{ email: string; password: string } | null>(null);
   const [isAuthLoading, setIsAuthLoading] = useState(false);
 
-  const handleAuthSubmit = async (email: string, password: string) => {
+  const handleAuthSubmit = async (email: string, password: string, name?: string) => {
     setIsAuthLoading(true);
     
     try {
-      const result = await login(email, password);
-      
-      if (result.requiresTwoFactor) {
-        setPendingAuth({ email, password });
-        setShowTwoFactor(true);
-        return { success: false, requiresTwoFactor: true };
+      if (authState === 'register') {
+        // Handle registration logic here if needed
+        // For now, just switch to login
+        setAuthState('login');
+        return { success: false, error: 'Registration not implemented in this flow' };
+      } else {
+        // Handle login
+        const result = await login(email, password);
+        
+        if (result.requiresTwoFactor) {
+          setPendingAuth({ email, password });
+          setAuthState('2fa');
+          return { success: false, requiresTwoFactor: true };
+        }
+        
+        return result;
       }
-      
-      return result;
     } finally {
       setIsAuthLoading(false);
     }
@@ -48,7 +55,7 @@ export default function Home() {
 
       if (result.success) {
         setPendingAuth(null);
-        setShowTwoFactor(false);
+        setAuthState('login');
       }
 
       return result;
@@ -57,9 +64,9 @@ export default function Home() {
     }
   };
 
-  const handleBackToLogin = () => {
+  const handleBackTo2FA = () => {
     setPendingAuth(null);
-    setShowTwoFactor(false);
+    setAuthState('login');
   };
 
   if (isLoading) {
@@ -74,13 +81,13 @@ export default function Home() {
     return <VaultDashboard />;
   }
 
-  if (showTwoFactor && pendingAuth) {
+  if (authState === '2fa' && pendingAuth) {
     return (
       <TwoFactorVerification
         email={pendingAuth.email}
         password={pendingAuth.password}
         onVerify={handle2FAVerification}
-        onBack={handleBackToLogin}
+        onBack={handleBackTo2FA}
         isLoading={isAuthLoading}
       />
     );
@@ -88,9 +95,9 @@ export default function Home() {
 
   return (
     <AuthForm 
-      isLogin={isLoginMode}
-      onToggleMode={() => setIsLoginMode(!isLoginMode)}
-      onSubmit={isLoginMode ? handleAuthSubmit : undefined}
+      isLogin={authState === 'login'}
+      onToggleMode={() => setAuthState(authState === 'login' ? 'register' : 'login')}
+      onSubmit={handleAuthSubmit}
       isLoading={isAuthLoading}
     />
   );
