@@ -258,10 +258,14 @@ textarea:disabled {
   background: var(--card);
   border: 2px solid var(--border);
   border-radius: var(--radius);
-  padding: 0.75rem 1rem;
-  font-size: 0.875rem;
+  padding: 1rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
   transition: all 0.3s ease;
   outline: none;
+  width: 100%;
+  min-height: 2.75rem;
+  padding-left: 2.5rem;
 }
 
 .modern-input:focus {

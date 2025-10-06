@@ -113,7 +113,7 @@ export default function AuthForm({ isLogin, onToggleMode, onSubmit, isLoading: e
                     Full Name
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center justify-center pointer-events-none">
                       <User className="h-5 w-5 text-gray-400" />
                     </div>
                     <input
@@ -124,7 +124,7 @@ export default function AuthForm({ isLogin, onToggleMode, onSubmit, isLoading: e
                       required={!isLogin}
                       value={formData.name}
                       onChange={handleInputChange}
-                      className="modern-input pl-12"
+                      className="modern-input"
                       placeholder="Enter your full name"
                     />
                   </div>
@@ -136,7 +136,7 @@ export default function AuthForm({ isLogin, onToggleMode, onSubmit, isLoading: e
                   Email Address
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center justify-center pointer-events-none">
                     <Mail className="h-5 w-5 text-gray-400" />
                   </div>
                   <input
@@ -158,7 +158,7 @@ export default function AuthForm({ isLogin, onToggleMode, onSubmit, isLoading: e
                   Password
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center justify-center pointer-events-none">
                     <Lock className="h-5 w-5 text-gray-400" />
                   </div>
                   <input
@@ -175,7 +175,7 @@ export default function AuthForm({ isLogin, onToggleMode, onSubmit, isLoading: e
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                    className="absolute inset-y-0 right-0 pr-4 flex items-center justify-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                   >
                     {showPassword ? (
                       <EyeOff className="h-5 w-5" />
