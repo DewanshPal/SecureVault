@@ -3,7 +3,7 @@
  */
 export async function copyToClipboardWithClear(
   text: string, 
-  clearAfterSeconds: number = 60
+  clearAfterSeconds: number = 15
 ): Promise<boolean> {
   try {
     await navigator.clipboard.writeText(text);
