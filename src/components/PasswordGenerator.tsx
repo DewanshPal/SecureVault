@@ -87,7 +87,7 @@ export default function PasswordGenerator({ onPasswordGenerated, className = '' 
 
       {/* Generated Password Display */}
       <div className="mb-6">
-        <div className="flex items-center space-x-3 mb-4">
+        <div className="flex items-center space-x-2 mb-4">
           <input
             type="text"
             value={password}
@@ -98,14 +98,14 @@ export default function PasswordGenerator({ onPasswordGenerated, className = '' 
           <button
             onClick={handleCopyPassword}
             disabled={!password}
-            className="modern-button bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2"
+            className="modern-icon-button p-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white"
             title="Copy password"
           >
             <Copy size={16} />
           </button>
           <button
             onClick={handleGeneratePassword}
-            className="modern-button bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 px-4 py-2"
+            className="modern-icon-button p-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white"
             title="Generate new password"
           >
             <RefreshCw size={16} />

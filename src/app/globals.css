@@ -137,6 +137,15 @@ html {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
 }
 
+/* Global button styles */
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
 /* Modern button styles */
 .btn-primary {
   background: var(--gradient-primary);
@@ -148,6 +157,7 @@ html {
   font-size: 0.875rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 14px 0 rgba(0, 118, 243, 0.39);
+  cursor: pointer;
 }
 
 .btn-primary:hover {
@@ -157,6 +167,90 @@ html {
 
 .btn-primary:active {
   transform: translateY(0);
+}
+
+/* Modern button styles */
+.modern-button {
+  background: linear-gradient(135deg, rgb(59, 130, 246), rgb(147, 51, 234));
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.modern-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px 0 rgba(59, 130, 246, 0.5);
+}
+
+.modern-button:active {
+  transform: translateY(0);
+}
+
+.modern-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.modern-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.modern-button:disabled:hover {
+  transform: none;
+  box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39);
+}
+
+/* Modern alert styles */
+.modern-alert {
+  border-radius: 0.75rem;
+  border: 1px solid;
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  transition: all 0.3s ease;
+}
+
+.modern-alert svg {
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+/* Interactive element cursors */
+input[type="checkbox"], 
+input[type="radio"], 
+input[type="range"], 
+select,
+label {
+  cursor: pointer;
+}
+
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+input[type="number"], 
+textarea {
+  cursor: text;
+}
+
+input:disabled, 
+select:disabled, 
+textarea:disabled {
+  cursor: not-allowed;
 }
 
 /* Modern input styles */
@@ -253,6 +347,7 @@ html {
   border: 1px solid rgba(229, 231, 235, 0.5);
   color: rgb(75, 85, 99);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 
 .dark .modern-icon-button {
@@ -278,6 +373,17 @@ html {
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 
+/* Icon button with custom background overrides */
+.modern-icon-button.bg-gradient-to-r {
+  background-color: transparent !important;
+  border: none;
+}
+
+.dark .modern-icon-button.bg-gradient-to-r {
+  background-color: transparent !important;
+  border: none;
+}
+
 .modern-icon-button-sm {
   padding: 0.375rem;
   border-radius: 0.5rem;
@@ -286,6 +392,7 @@ html {
   border: 1px solid rgba(229, 231, 235, 0.5);
   color: rgb(107, 114, 128);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 
 .dark .modern-icon-button-sm {
